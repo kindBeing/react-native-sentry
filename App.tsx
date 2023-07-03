@@ -7,6 +7,7 @@
 
 import React from 'react';
 import {
+  Button,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -21,6 +22,14 @@ import { SENTRY_DSN, SENTRY_SAMPLE_RATE, SENTRY_ORG, SENTRY_PROJECT, SENTRY_AUTH
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 import CustomButton from './nested-directory/CustomButton';
+
+import * as Sentry from '@sentry/react-native';
+
+Sentry.init({
+  dsn: SENTRY_DSN,
+  release: SENTRY_RELEASE,
+  dist: SENTRY_DIST,
+});
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -44,6 +53,12 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <CustomButton />
+          <Button
+            title="Try!"
+            onPress={() => {
+              Sentry.captureException(new Error('First error'));
+            }}
+          />
           <View>
             <Text>Sentry DSN: {SENTRY_DSN}</Text>
             <Text>{'\n'}</Text>
@@ -83,4 +98,4 @@ StyleSheet.create({
     fontWeight: '700',
   },
 });
-export default App;
+export default Sentry.wrap(App);
