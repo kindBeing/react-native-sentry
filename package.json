@@ -3,13 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "android": "react-native run-android --variant=release",
+    "ios": "react-native run-ios --mode Release",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "build:android": "mkdirp dist/android && react-native bundle --platform android --dev false --entry-file index.js --reset-cache --bundle-output dist/android/index.android.bundle --sourcemap-output dist/android/index.android.bundle.map",
+    "build:ios": "mkdirp dist/ios && react-native bundle --platform ios --dev false --entry-file index.js --reset-cache --bundle-output dist/ios/main.jsbundle --sourcemap-output dist/ios/main.jsbundle.map",
+    "sentry:ci:ios": "sentry-cli sourcemaps inject --org self-1z --project project-milo dist/ios/ && sentry-cli sourcemaps upload --org self-1z --project project-milo dist/ios/",
+    "sentry:ci:android": "sentry-cli sourcemaps inject --org self-1z --project project-milo dist/android/ && sentry-cli sourcemaps upload --org self-1z --project project-milo dist/android/"
   },
   "dependencies": {
+    "@sentry/cli": "^2.19.4",
     "@sentry/react-native": "^5.6.0",
     "react": "18.2.0",
     "react-native": "0.72.1"
