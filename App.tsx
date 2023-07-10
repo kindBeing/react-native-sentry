@@ -24,6 +24,7 @@ import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
 import CustomButton from './nested-directory/CustomButton';
 
 import * as Sentry from '@sentry/react-native';
+import CustomButtonTwo from './nested-directory/CustomButtonTwo';
 
 Sentry.init({
   dsn: SENTRY_DSN,
@@ -53,6 +54,7 @@ function App(): JSX.Element {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <CustomButton />
+          <CustomButtonTwo />
           <Button
             title="Try!"
             onPress={() => {

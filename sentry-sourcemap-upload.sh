@@ -12,28 +12,34 @@ function go_to_project_root_directory() {
 }
 
 function export_env_variables() {
+#  export NODE_ENV="development"
+#  export NODE_ENV="production"
   export SENTRY_URL="https://sentry.io/"
   export SENTRY_DSN="https://7a11abd7255545ad8a20ea892ba89168@o4505410941878272.ingest.sentry.io/4505410943778816"
   export SENTRY_SAMPLE_RATE=1
   export SENTRY_ORG="self-1z"
   export SENTRY_PROJECT="project-milo"
   export SENTRY_AUTH_TOKEN="5d82d98be0d14a5987f28045c0354d84e05e62b6fe6245b6acce1bfcdb144b83"
-  export SENTRY_RELEASE="1.0.13"
+  export SENTRY_RELEASE="1.0.23"
 }
 
 function generate_application_bundles() {
-  npm run build:ios
-  npm run build:android
+  dist_directory="dist"
+  if [ -d "${dist_directory}" ]; then
+      rm -rf "${dist_directory}"
+      echo "Deleted the old dist directory."
+  else
+      echo "The directory does not exist or has already been deleted. Moving on..."
+  fi
+  npm run build:ios:dev
+#  npm run build:ios
+#  npm run build:android
 }
 
 function sentry_release() {
-#  dist_directory="dist"
-  npm run sentry:ci:ios
-  npm run sentry:ci:android
-
-#  echo "Deleting the dist directory ${dist_directory}"
-#  go_to_project_root_directory
-#  rm -rf "$dist_directory"
+  npm run sentry:upload:dev
+#  npm run sentry:upload:ios
+#  npm run sentry:upload:android
 }
 
 function display_success_message() {

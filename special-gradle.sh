@@ -12,7 +12,10 @@ function go_to_project_root_directory() {
 }
 
 function export_env_variables() {
-  export SENTRY_RELEASE="1.0.13"
+#    export NODE_ENV="development"
+  #  export NODE_ENV="production"
+
+  export SENTRY_RELEASE="1.0.15"
   export SENTRY_DIST="android"
 }
 
