@@ -20,7 +20,7 @@ function export_env_variables() {
   export SENTRY_ORG="self-1z"
   export SENTRY_PROJECT="project-milo"
   export SENTRY_AUTH_TOKEN="5d82d98be0d14a5987f28045c0354d84e05e62b6fe6245b6acce1bfcdb144b83"
-  export SENTRY_RELEASE="1.0.23"
+  export SENTRY_RELEASE="1.0.25"
 }
 
 function generate_application_bundles() {
@@ -32,14 +32,15 @@ function generate_application_bundles() {
       echo "The directory does not exist or has already been deleted. Moving on..."
   fi
   npm run build:ios:dev
-#  npm run build:ios
-#  npm run build:android
+}
+
+function xcode_build_debug_symbols() {
+  npm run build:ios:debug
 }
 
 function sentry_release() {
-  npm run sentry:upload:dev
-#  npm run sentry:upload:ios
-#  npm run sentry:upload:android
+  npm run sentry:upload:symbols
+#  npm run sentry:upload:dev
 }
 
 function display_success_message() {
@@ -53,6 +54,7 @@ function main() {
   go_to_project_root_directory
   export_env_variables
   generate_application_bundles
+  xcode_build_debug_symbols
   sentry_release
   display_success_message
 }

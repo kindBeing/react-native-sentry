@@ -13,7 +13,8 @@
     "build:android": "mkdirp dist/android && react-native bundle --platform android --dev false --entry-file index.js --reset-cache --bundle-output dist/android/index.android.bundle --sourcemap-output dist/android/index.android.bundle.map",
     "build:ios": "mkdirp dist/ios && react-native bundle --platform ios --dev false --entry-file index.js --reset-cache --bundle-output dist/ios/main.jsbundle --sourcemap-output dist/ios/main.jsbundle.map",
     "build:ios:dev": "mkdir -p dist/ios && react-native bundle --platform ios --dev false --assets-dest dist/ios --entry-file index.js --reset-cache --bundle-output dist/ios/main.jsbundle --sourcemap-output dist/ios/main.jsbundle.map",
-    "build:ios:debug": "xcodebuild -workspace ios/myApp.xcworkspace -scheme myApp -configuration Debug -sdk iphonesimulator -derivedDataPath dist/ios/",
+    "build:ios:debug": "xcodebuild -workspace ios/myApp.xcworkspace -scheme myApp -configuration Release -sdk iphonesimulator -derivedDataPath dist/ios/",
+    "sentry:upload:symbols": "sentry-cli debug-files upload --auth-token $SENTRY_AUTH_TOKEN --org $SENTRY_ORG --project $SENTRY_PROJECT dist/ios/Build/Products/Debug-iphonesimulator/",
     "sentry:upload:dev": "sentry-cli sourcemaps upload --org $SENTRY_ORG --project $SENTRY_PROJECT --release=$SENTRY_RELEASE --dist=ios dist/ios",
     "sentry:upload:ios": "sentry-cli sourcemaps inject --org $SENTRY_ORG --project $SENTRY_PROJECT dist/ios/ && sentry-cli --url $SENTRY_URL sourcemaps upload --org $SENTRY_ORG --project $SENTRY_PROJECT --release=$SENTRY_RELEASE --dist=ios dist/ios/",
     "sentry:upload:android": "sentry-cli sourcemaps inject --org $SENTRY_ORG --project $SENTRY_PROJECT dist/android/ && sentry-cli --url $SENTRY_URL sourcemaps upload --org $SENTRY_ORG --project $SENTRY_PROJECT --release=$SENTRY_RELEASE --dist=android dist/android/"
